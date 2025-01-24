@@ -41,6 +41,7 @@ export default function Dashboard(){
 
         return `${hour}:${mins} ${meridiem}`;
     }
+    const totalCharge= useRef();
 
     function calculateTimeConsumed() {
         function to24HourFormat(timeStr) {
@@ -62,8 +63,34 @@ export default function Dashboard(){
     
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
-    
+
+        totalCharge.current = amountToPay(hours, minutes);
         return hours > 0 ? `${hours}hr and ${minutes} minutes` : `${minutes} minutes`;
+    }
+
+    function amountToPay(hours, minutes){
+        let charge = 0;
+        let isCarType = tableRow[indexRef.current].vehicleType === "Car";
+
+        if(minutes >= 10 && isCarType){ //for car charged
+            charge += 5;
+        }else if(minutes >= 10 && !isCarType){ // for motorcycle chrage
+            charge += 2;
+        } 
+
+        if(minutes >= 30 && isCarType){
+            charge += 5;
+        }else if((minutes >= 30 && !isCarType)){
+            charge += 3;
+        }
+
+        if(hours >= 1 && isCarType){
+            charge += hours * 15;
+        }else if((hours >= 1 && !isCarType)){
+            charge += hours * 7;
+        }
+
+        return charge;
     }
 
     const [errorMessage, setErrorMassage] = useState("");
@@ -73,7 +100,7 @@ export default function Dashboard(){
     const clientOpt = useRef();
     const slotOpt = useRef();
 
-    function getFormData(){
+    function addClient(){
         let isReject = false;
 
         if(nameInput.current.value && plateInpt.current.value){
@@ -256,7 +283,7 @@ export default function Dashboard(){
                 </div>
                 <div className="btn-info">
                   <input onClick={toggleform} id="btnClose" type="button" value="close"/>
-                  <input type="button" onClick={getFormData} id="btnStart" value="Start"/>
+                  <input type="button" onClick={addClient} id="btnStart" value="Start"/>
                 </div>
               </form>
             </div> }
@@ -267,7 +294,7 @@ export default function Dashboard(){
                     <p><b>License:</b> {tableRow[indexRef.current].licensePlate}</p>
                     <p><b>Time-in:</b> {tableRow[indexRef.current].timeIn}</p>
                     <p><b>Time Consumed:</b> {calculateTimeConsumed()}</p>
-                    <p><b>Amount Payable:</b> ₱5</p>
+                    <p><b>Amount Payable:</b> ₱{totalCharge.current}</p>
                 </div>
                 <button onClick={() => setShowDetails(d => !d)}>close</button>
                 <button onClick={removeClient}>out</button>
