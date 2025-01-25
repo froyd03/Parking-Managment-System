@@ -32,6 +32,11 @@ export default function Dashboard(){
         setShowForm(f => !f);
         setErrorMassage("");
     }
+
+    function dateNow(){
+        const date = new Date();
+        return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+    }
     
     function formatDate(){
         const date = new Date();
@@ -119,7 +124,7 @@ export default function Dashboard(){
                 licensePlate: plateInpt.current.value.toUpperCase(),
                 vehicleType: vehicleRbtn.current.checked ? "Car" : "Motorcycle",
                 timeIn: formatDate(),
-                Rate: vehicleRbtn.current.checked ? "15/hr" : "7/hr",
+                Rate: vehicleRbtn.current.checked ? "₱15/hr" : "₱7/hr",
             }
 
             const filtered = tableRow.filter(value => {
@@ -292,12 +297,14 @@ export default function Dashboard(){
                     <h4>Client Details</h4>
                     <p><b>Name:</b> {tableRow[indexRef.current].ClientName}</p>
                     <p><b>License:</b> {tableRow[indexRef.current].licensePlate}</p>
-                    <p><b>Time-in:</b> {tableRow[indexRef.current].timeIn}</p>
+                    <p><b>Time-in:</b> {tableRow[indexRef.current].timeIn} | {dateNow()}</p>
                     <p><b>Time Consumed:</b> {calculateTimeConsumed()}</p>
                     <p><b>Amount Payable:</b> ₱{totalCharge.current}</p>
+                    <div>
+                        <button className='close' onClick={() => setShowDetails(d => !d)}>close</button>
+                        <button className='btn-out' onClick={removeClient}>out</button>
+                    </div>  
                 </div>
-                <button onClick={() => setShowDetails(d => !d)}>close</button>
-                <button onClick={removeClient}>out</button>
             </div>}
             
         </section>
