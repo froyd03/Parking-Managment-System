@@ -1,0 +1,20 @@
+[33mcommit b18530fdecd3fa78dd5c684a7b7ea59324119654[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Froyd <banataofroyd@gmail.com>
+Date:   Sat Jan 25 09:50:23 2025 +0800
+
+    Dashboard:added design for client details
+
+[33mcommit f9695dba5c234a718a491f814bb758885cda477b[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Froyd <banataofroyd@gmail.com>
+Date:   Fri Jan 24 19:12:41 2025 +0800
+
+    adding charge to client
+    >
+    > >charge depends on client vehicle
+    > >higher fee for car and lower fee for motorcycle
+
+[33mcommit 256e03ac91f35ef0b5dbd1e5a504e6e48c12738c[m
+Author: Froyd <banataofroyd@gmail.com>
+Date:   Fri Jan 24 18:06:19 2025 +0800
+
+    first commit

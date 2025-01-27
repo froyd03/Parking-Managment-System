@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect} from 'react';
 import '../Dashboard/Dashboard.css'
+import { useRef, useState, useEffect} from 'react';
 import TwoWheelerOutlinedIcon from '@mui/icons-material/TwoWheelerOutlined';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
@@ -175,8 +175,8 @@ export default function Dashboard(){
     return(
         <section>
             <div className="header">
-            <h3>Dashboard</h3>
-                </div>
+                <h3>Dashboard</h3>
+            </div>
                 <hr />
                 <div className="manage">
                 <div className="park-manager">
@@ -199,7 +199,7 @@ export default function Dashboard(){
                         number={activeClient}/>
                     <Record icon={<ConfirmationNumberOutlinedIcon sx={{fontSize: 40}} className='icon'/>} 
                         title="Total Reservation" 
-                        number={0}/>     
+                        number={0}/>
                 </div> 
             </div>
             <div className="meter">
@@ -213,7 +213,7 @@ export default function Dashboard(){
             <div className="add">
                 <button onClick={toggleform} id="addVehicle">check-in</button>
             </div>
-            <table>
+            <table className='tableData'>
                 <thead>
                     <tr>
                         <th>Client Name</th>

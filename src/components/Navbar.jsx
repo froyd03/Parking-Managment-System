@@ -47,19 +47,19 @@ export default function Navbar(){
                 <span>Dashboard</span>
             </div>
         </Link>
-        <Link to='/'>
+        <Link to=''>
             <div className={active[1]} onClick={setSlotClass}>
                 <GarageOutlinedIcon color={activeIcon(1)} sx={{fontSize: 25}}/>
                 <span>Slots</span>
             </div>
         </Link>
-        <Link to='/'>
+        <Link to='/client'>
             <div className={active[2]} onClick={setClientClass}>
                 <PeopleAltIcon color={activeIcon(2)} sx={{ fontSize: 25 }}/>
                 <span>Client</span>
             </div>
         </Link>
-        <Link to='/'>
+        <Link to=''>
             <div className={active[3]} onClick={setTransactionClass}>
                 <PaidIcon color={activeIcon(3)} sx={{ fontSize: 25 }}/>
                 <span>Transaction</span>

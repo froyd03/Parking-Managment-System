@@ -3,25 +3,25 @@ section{
     font-family: 'poppins';
 }
 
-h3{
+.header h3{
     margin: 1em 0 1em 1em;
     font-size: 24px;
     font-weight: bold;  
     color: #343c6a;
 }
 
-h5{
-    font-size: 13px;
+.total-slot h5{
     margin: 0;
     font-weight: 600;
+    font-size: 14px;
+    color: #757575;
 }
 
-h2{
+.total-slot h2{
     margin: 0;
     font-size: 20px;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.801);
-
 }
 
 .manage{
@@ -39,7 +39,7 @@ h2{
     flex-direction: row;
 }
 
-.total-slot, .slot-stat{
+.total-slot{
     width: 28%;
     height: 70px;
     padding: 30px 0px 0px 20px;
@@ -47,16 +47,6 @@ h2{
     border-radius: 8px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 2px 1px 3px 2px rgba(0, 0, 0, 0.096);
-}
-
-
-.total-slot h5, .slot-stat h5{
-    font-size: 14px;
-    color: #757575;
-}
-
-.total-slot h2, .slot-stat h2{
-    font-weight: 600px;
 }
 
 .total-slot:hover,
@@ -82,28 +72,24 @@ h2{
     background-color: white;
     padding: 10px 20px;
     font-size: 15px;
-    box-shadow: 2px 1px 3px 2px rgba(0, 0, 0, 0.096);
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.096);
 }
 
-tr, td, th{
+.tableData td, .tableData th{
     border: 1px solid #75757565;
     padding: 10px 8px;
     text-align: left;
     border-radius: 20px;
 }
 
-th{
-    font-weight: 600;
-}
-
-table{
+.tableData{
     border-collapse: collapse;  
     width: 100%;
     font-size: 13.5px;
     text-align: left;
 }
 
-th{
+.tableData th{
     width: 110px;
     font-weight: bold;
     color: #757575;
@@ -132,22 +118,10 @@ th{
     font-size: 13px;
 }
 
-.btn{
-    border: 1px solid rgba(0, 0, 0, 0.315);
-    background-color: #156FF5;
-    color: #fff;
-    border-radius: 2px;
-    height: 22z px;
-}
-
 .search{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-
-.search-bar img{
-    width: 15px;
 }
 
 .search-bar input{
@@ -157,7 +131,7 @@ th{
     outline: none;
     padding: 3px 5px;
     background-color: rgba(0, 0, 0, 0.048);
-    border: 1px solid black ;
+    border: 1px solid rgba(0, 0, 0, 0.466) ;
 }
 
 .search p{
@@ -218,7 +192,6 @@ form h4{
 }
 
 .formInp:focus, #inp-hour:focus, #inp-mins:focus{   
-    box-shadow: 2px 0px 2px 1px #e9a91488;
     outline: 1px solid #156FF5;
     background-color: #F4F4F4;
 }
@@ -251,7 +224,6 @@ form h4{
 }
 
 #Car, #Motor{
-    float: left;
     margin-top: 1px;
 }
 
@@ -334,88 +306,6 @@ form h4{
     width: 70px;
     transition: 0.3s;
     font-size: 14px;
-}
-
-.delete{
-    display: none;
-    flex-direction: column;
-    width: 200px;
-    height: 130px;
-    background-color: white;
-    padding: 20px 15px;
-    border-radius: 25px;
-}
-
-.delete p{
-    padding: 0;
-    text-align: center;
-    font-size: 15px;
-    margin-bottom: 20%;
-}
-
-.isEnd{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.isEnd button{
-    border: none;
-    width: 230px;
-    height: 25px;
-    position: relative;
-    left: -15px;
-    padding: 1px 0;
-    background-color: transparent;
-}
-
-.line1{
-    width: 225px;
-    position: relative;
-    left: -14px;
-    margin: 0px 0px 0px 0px;
-    opacity: 50%;
-}
-
-.confirm-modal{
-    position: fixed;
-    top: 0%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    background: rgba(0, 0, 0, 0.226);
-    justify-items: center;
-    align-content: center;
-}
-
-.confirm{
-    background: #5C6BC0;
-    height: 100px;
-    padding: 30px 20px;
-    border-radius: 20px;
-    width: 30%;   
-    align-self: center;
-    text-align: center;
-    color: white;
-}
-
-#confirmNo, #confirmYes {
-    background: #cce5ff;
-    border: none;
-    padding: 15px 25px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-#confirmYes {
-    background-color: rgba(248, 60, 60, 0.986);
-    color: #fff;
-}
-
-.confirm p{
-    margin: 0 0 5% 0;
 }
 
 .textError{
