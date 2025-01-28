@@ -3,8 +3,38 @@ import VIP from '@mui/icons-material/StarBorderOutlined';
 import Guest from '@mui/icons-material/HelpOutlineOutlined';
 import Member from '@mui/icons-material/PersonOutlined';
 import Record from '../../components/Record.jsx'
+import { useEffect, useRef, useState } from 'react';
+
 
 export default function Client(){
+
+    const tableRow = JSON.parse(localStorage.getItem("data")) || [];
+    const [sort, setSort] = useState(tableRow);
+
+
+    function handleSort(e){
+        if(e.target.value === "all"){
+            setSort([...tableRow])
+        }else if(e.target.value === "VIP"){
+            const sortVIP = tableRow.filter(value => {
+                return value.clientType === "VIP"
+            })
+            setSort([...sortVIP])
+
+        }else if(e.target.value === "guest"){
+            const sortGuest = tableRow.filter(value => {
+                return value.clientType === "Guest"
+            })
+
+            setSort([...sortGuest])
+        }else if(e.target.value === "member"){
+            const sortMember = tableRow.filter(value => {
+                return value.clientType === "Member"
+            })
+            setSort([...sortMember])
+        }
+    }
+    
     return(
         <section>
 
@@ -17,7 +47,8 @@ export default function Client(){
             <div className="main-wrapper">
     
                 <div className="main-content">
-                    <h2>Client Type</h2>
+                    <h3>Client Type</h3>
+                    <hr />
                         <div className="dashboard-grid">
                             <div className="dashboard-item">
                                 <div className="dashboard-icon">
@@ -49,8 +80,8 @@ export default function Client(){
                                 </div>
                             </div>
                         </div>
-                    <label for="clientTypeSort">Sort by Client Type:</label>
-                    <select id="clientTypeSort" onchange="sortClientData()">
+                    <label htmlFor="clientTypeSort">Sort by Client Type:</label>
+                    <select onChange={handleSort} id="clientTypeSort" >
                         <option value="all">All</option>
                         <option value="member">Members</option>
                         <option value="VIP">VIP Members</option>
@@ -69,14 +100,22 @@ export default function Client(){
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody id="clientTableBody"></tbody>
+                                <tbody id="clientTableBody">
+                                    {sort.map((value, index) => 
+                                        <tr key={index}>
+                                            <td>{index}</td>
+                                            <td>{value.ClientName}</td>
+                                            <td>{value.licensePlate}</td>
+                                            <td>{value.clientType}</td>
+                                        </tr>)}
+                                </tbody>
                             </table>
                         </div>
                     </div>
                     <div id="pagination-controls">
-                        <button id="prevPageBtn" className="pagination-btn" onclick="changePage(-1)">Prev</button>
+                        <button id="prevPageBtn" className="pagination-btn" >Prev</button>
                         <span id="pageInfo">Page 1 of 1</span>
-                        <button id="nextPageBtn" className="pagination-btn" onclick="changePage(1)">Next</button>
+                        <button id="nextPageBtn" className="pagination-btn" >Next</button>
                     </div>
                 </div>
             </div>

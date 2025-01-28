@@ -1,23 +1,33 @@
 
-.main-content {
-    padding: 30px;
+
+.main-content hr{
+    margin-bottom: 25px;
 }
 
+.main-content h3 {
+    font-size: 24px;
+    margin: 1em 0 1em 1em;
+    font-weight: bold;  
+    color: #343c6a;
+}
 
-
+.main-content label {
+    margin-left: 2%;
+}
 
 /* Dashboard Styles */
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 30px;
+    margin-left: 2%;
 }
 
 .dashboard-item {
     background-color: #ffffff;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
@@ -57,6 +67,7 @@
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
+    margin-left: 2%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -110,6 +121,7 @@ select:focus {
     border: 1px solid #ddd;
     margin-bottom: 20px;
     font-size: 16px;
+    margin-left: 2%;
     background-color: #fff;
 }
 

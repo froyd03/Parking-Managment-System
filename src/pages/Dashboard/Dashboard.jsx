@@ -9,15 +9,20 @@ import RecentActorsOutlinedIcon from '@mui/icons-material/RecentActorsOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import Record from '../../components/Record.jsx'
 
+
 export default function Dashboard(){
     
-    const [tableRow, setTableRow] = useState([
-                                        {ClientName: "-",
-                                        licensePlate: "-",
-                                        vehicleType: "-",
-                                        timeIn: "-",
-                                        Rate: "-",
-                                        Actions: "-"}])
+     const [tableRow, setTableRow] = useState(() => {
+        return JSON.parse(localStorage.getItem("data")) ||
+            [{ClientName: "-",
+            licensePlate: "-",
+            vehicleType: "-",
+            clientType: "-",
+            timeIn: "-",
+            Rate: "-",
+            Actions: "-"}];
+     });
+
 
     const [showForm, setShowForm] = useState(false);
     const [isShowDetails, setShowDetails] = useState(false);
@@ -123,6 +128,7 @@ export default function Dashboard(){
                 ClientName:  nameInput.current.value,
                 licensePlate: plateInpt.current.value.toUpperCase(),
                 vehicleType: vehicleRbtn.current.checked ? "Car" : "Motorcycle",
+                clientType: clientOpt.current.value,
                 timeIn: formatDate(),
                 Rate: vehicleRbtn.current.checked ? "₱15/hr" : "₱7/hr",
             }
@@ -131,7 +137,7 @@ export default function Dashboard(){
                 return value.ClientName != "-"
             })
 
-            setTableRow(tr => [newClient, ...filtered]);       
+            setTableRow(tr => [newClient, ...filtered]);     
             toggleform();
         }else{
             plateInpt.current.classList.add("invalid");
@@ -145,7 +151,7 @@ export default function Dashboard(){
             setFourWheel(fh => fh + 1);
         }else{
             setTwoWheel(th => th + 1);
-        }
+        }   
     }
 
     function removeClient(){
@@ -162,16 +168,31 @@ export default function Dashboard(){
         }
     }
 
-    const [fourWheelStatus, setFourWheel] = useState(0);
-    const [twoWheelStatus, setTwoWheel] = useState(0);
-    const [availSlot, setAvailSlot] = useState();
+    const [fourWheelStatus, setFourWheel] = useState(() => {
+        let count = 0;
+        tableRow.forEach(value => {
+            if(value.vehicleType === "Car") count++;
+        })
+        return count;
+    });
+
+    const [twoWheelStatus, setTwoWheel] = useState(() => {
+        let count = 0;
+        tableRow.forEach(value => {
+            if(value.vehicleType === "Motorcycle") count++;
+        })
+        return count;
+    });
+
+    const [availSlot, setAvailSlot] = useState(0);
     const [activeClient, setActive] = useState(0);
 
     useEffect(()=> {
+        localStorage.setItem("data", JSON.stringify(tableRow));
         setAvailSlot(50-(fourWheelStatus + twoWheelStatus))
         setActive(fourWheelStatus + twoWheelStatus)
     }, [tableRow])
-
+    
     return(
         <section>
             <div className="header">
@@ -180,24 +201,27 @@ export default function Dashboard(){
                 <hr />
                 <div className="manage">
                 <div className="park-manager">
-                    <Record icon={<LocalParkingIcon sx={{fontSize: 35}} className='icon'/>} 
+                    <Record icon={<LocalParkingIcon 
+                                    color='primary'
+                                    sx={{fontSize: 35}} 
+                                    className='icon'/>} 
                         title="Total Parking Slots" 
                         number={50}/>
-                    <Record icon={<DirectionsCarFilledIcon sx={{fontSize: 40}} className='icon'/>} 
+                    <Record icon={<DirectionsCarFilledIcon color='primary' sx={{fontSize: 40}} className='icon'/>} 
                         title="4 Wheeler Slot Status" 
                         number={fourWheelStatus}
                         total="/25"/> 
-                    <Record icon={<TwoWheelerOutlinedIcon sx={{fontSize: 40}} className='icon'/>} 
+                    <Record icon={<TwoWheelerOutlinedIcon color='primary' sx={{fontSize: 40}} className='icon'/>} 
                         title="2 Wheeler Slot Status" 
                         number={twoWheelStatus}
                         total="/25"/>
-                    <Record icon={<EventAvailableIcon sx={{fontSize: 40}} className='icon'/>} 
+                    <Record icon={<EventAvailableIcon color='primary' sx={{fontSize: 40}} className='icon'/>} 
                         title="Available Slot" 
                         number={availSlot}/>
-                    <Record icon={ <RecentActorsOutlinedIcon sx={{fontSize: 40}} className='icon'/>} 
+                    <Record icon={ <RecentActorsOutlinedIcon color='primary' sx={{fontSize: 40}} className='icon'/>} 
                         title="Active clients" 
                         number={activeClient}/>
-                    <Record icon={<ConfirmationNumberOutlinedIcon sx={{fontSize: 40}} className='icon'/>} 
+                    <Record icon={<ConfirmationNumberOutlinedIcon color='primary' sx={{fontSize: 40}} className='icon'/>} 
                         title="Total Reservation" 
                         number={0}/>
                 </div> 
@@ -306,7 +330,8 @@ export default function Dashboard(){
                     </div>  
                 </div>
             </div>}
-            
+
         </section>
     )
+
 }
