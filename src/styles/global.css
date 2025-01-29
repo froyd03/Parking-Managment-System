@@ -1,0 +1,133 @@
+body{
+    margin: 0;
+    letter-spacing: 1px;
+    background-color: #f5f7fa;
+    font-family: 'poppins';
+}
+
+section{
+    margin-left: 20%;
+}
+
+h2{
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.801);
+}
+
+h3{
+    margin: 1em 0 1em 1em;
+    font-size: 22px;
+    font-weight: bold;  
+    color: #343c6a;
+}
+
+h5{
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: #757575;
+}
+
+label {
+    margin-left: 2%;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+p {
+    font-size: 15px;
+    color: #333;
+}
+
+table{
+    border-collapse: collapse;  
+    border-spacing: 0;
+    overflow: hidden;
+    width: 100%;
+    font-size: 13.5px;
+    text-align: left;
+}
+
+td, th{
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #75757565;
+}
+
+th{
+    color: #757575;
+}
+
+select {
+    width: 98%;
+    padding: 10px;
+    border-radius: 8px;
+    
+    border: 1px solid rgba(0, 0, 0, 0.26);
+    transition: border-color 0.3s ease;
+    background-color: #fff;
+}
+
+select:focus {
+    outline: 1px solid #156FF5;
+}
+
+button{
+    background-color: #5C6BC0;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+button:hover{
+    transform: scale(1.05);
+}
+
+.live-record{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-left: 2%;
+    margin-bottom: 3%;
+    margin-top: 2%;
+    flex-direction: row;
+}
+
+.live-item{
+    width: 28%;
+    height: 70px;
+    padding: 30px 0px 0px 20px;
+    background-color: white;
+    border-radius: 8px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 2px 1px 3px 2px rgba(0, 0, 0, 0.096);
+}
+
+.live-item::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 12px;
+    height: 100%;
+    border-radius: 8px 0px 0px 8px;
+    background-color: #16dbcb7c;
+}
+
+.live-item:hover,
+.live-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.live-item .icon, .live-item .icon{
+    width: 40px;
+    float: left;
+    margin-right: 5%;
+    border-radius: 10%;
+}

@@ -37,7 +37,6 @@ export default function Navbar(){
     }
 
     return(<>
-       
         <nav className="nav-container">
         <h1 id="name">ParkEase</h1>
         <hr/>
@@ -47,7 +46,7 @@ export default function Navbar(){
                 <span>Dashboard</span>
             </div>
         </Link>
-        <Link to=''>
+        <Link to='/slot'>
             <div className={active[1]} onClick={setSlotClass}>
                 <GarageOutlinedIcon color={activeIcon(1)} sx={{fontSize: 25}}/>
                 <span>Slots</span>

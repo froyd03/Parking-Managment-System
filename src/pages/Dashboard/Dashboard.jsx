@@ -1,10 +1,11 @@
 import '../Dashboard/Dashboard.css'
+import '../../styles/global.css'
 import { useRef, useState, useEffect} from 'react';
 import TwoWheelerOutlinedIcon from '@mui/icons-material/TwoWheelerOutlined';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import RecentActorsOutlinedIcon from '@mui/icons-material/RecentActorsOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import Record from '../../components/Record.jsx'
@@ -12,17 +13,15 @@ import Record from '../../components/Record.jsx'
 
 export default function Dashboard(){
     
-     const [tableRow, setTableRow] = useState(() => {
-        return JSON.parse(localStorage.getItem("data")) ||
-            [{ClientName: "-",
-            licensePlate: "-",
-            vehicleType: "-",
-            clientType: "-",
-            timeIn: "-",
-            Rate: "-",
-            Actions: "-"}];
-     });
+    const [tableRow, setActiveData] = useState(() => {
+        return JSON.parse(localStorage.getItem("data")) || []
+    });
 
+    function setStoredData(arrayOfObj){
+        const parsedData = JSON.parse(localStorage.getItem("allClientData")) || [];
+        const storedData = [arrayOfObj, ...parsedData];
+        localStorage.setItem("allClientData", JSON.stringify(storedData));
+    }
 
     const [showForm, setShowForm] = useState(false);
     const [isShowDetails, setShowDetails] = useState(false);
@@ -47,12 +46,12 @@ export default function Dashboard(){
         const date = new Date();
         const hour = date.getHours() > 12 ? "0"+(date.getHours()-12): date.getHours();
         const mins = date.getMinutes() < 10 ? "0"+(date.getMinutes()): date.getMinutes();
-        const meridiem = hour > 11 ? "PM":"AM";
-
+        const meridiem = date.getHours() > 11 ? "PM":"AM";
+        
         return `${hour}:${mins} ${meridiem}`;
     }
-    const totalCharge= useRef();
 
+    const totalCharge= useRef();
     function calculateTimeConsumed() {
         function to24HourFormat(timeStr) {
             const [time, modifier] = timeStr.split(' ');
@@ -75,7 +74,7 @@ export default function Dashboard(){
         const minutes = totalMinutes % 60;
 
         totalCharge.current = amountToPay(hours, minutes);
-        return hours > 0 ? `${hours}hr and ${minutes} minutes` : `${minutes} minutes`;
+        return hours > 0 ? `${hours}hr ${minutes}min` : `${minutes}min`;
     }
 
     function amountToPay(hours, minutes){
@@ -133,11 +132,8 @@ export default function Dashboard(){
                 Rate: vehicleRbtn.current.checked ? "₱15/hr" : "₱7/hr",
             }
 
-            const filtered = tableRow.filter(value => {
-                return value.ClientName != "-"
-            })
-
-            setTableRow(tr => [newClient, ...filtered]);     
+            setActiveData(tr => [newClient, ...tableRow]);   
+            setStoredData(newClient);
             toggleform();
         }else{
             plateInpt.current.classList.add("invalid");
@@ -158,7 +154,7 @@ export default function Dashboard(){
         const filtered = tableRow.filter(value => {
             return value.licensePlate !== tableRow[indexRef.current].licensePlate;
         })
-        setTableRow(t => [...filtered]);
+        setActiveData(t => [...filtered]);
         setShowDetails(d => !d);
 
         if(tableRow[indexRef.current].vehicleType === "Car"){
@@ -198,9 +194,9 @@ export default function Dashboard(){
             <div className="header">
                 <h3>Dashboard</h3>
             </div>
-                <hr />
-                <div className="manage">
-                <div className="park-manager">
+            <hr />
+            <div className="live">
+                <div className="live-record">
                     <Record icon={<LocalParkingIcon 
                                     color='primary'
                                     sx={{fontSize: 35}} 
@@ -215,13 +211,13 @@ export default function Dashboard(){
                         title="2 Wheeler Slot Status" 
                         number={twoWheelStatus}
                         total="/25"/>
-                    <Record icon={<EventAvailableIcon color='primary' sx={{fontSize: 40}} className='icon'/>} 
+                    <Record icon={<CheckCircleOutlinedIcon color='primary' sx={{fontSize: 40}} className='icon'/>} 
                         title="Available Slot" 
                         number={availSlot}/>
                     <Record icon={ <RecentActorsOutlinedIcon color='primary' sx={{fontSize: 40}} className='icon'/>} 
                         title="Active clients" 
                         number={activeClient}/>
-                    <Record icon={<ConfirmationNumberOutlinedIcon color='primary' sx={{fontSize: 40}} className='icon'/>} 
+                    <Record icon={<EditCalendarIcon color='primary' sx={{fontSize: 40}} className='icon'/>} 
                         title="Total Reservation" 
                         number={0}/>
                 </div> 
@@ -254,7 +250,11 @@ export default function Dashboard(){
                             <td>{value.vehicleType}</td>
                             <td>{value.timeIn}</td>
                             <td>{value.Rate}</td>
-                            <td><button onClick={() => handleDetails(index)}>view</button></td>
+                            <td><button 
+                                    className='btnView' 
+                                    onClick={() => handleDetails(index)}>
+                                view
+                                </button></td>
                         </tr>
                     )}     
                 </thead>
@@ -311,8 +311,8 @@ export default function Dashboard(){
                   </label>
                 </div>
                 <div className="btn-info">
-                  <input onClick={toggleform} id="btnClose" type="button" value="close"/>
-                  <input type="button" onClick={addClient} id="btnStart" value="Start"/>
+                  <button onClick={toggleform} id="btnClose" value="close">Close</button>
+                  <button onClick={addClient} id="btnStart" value="Start">Start</button>
                 </div>
               </form>
             </div> }
@@ -330,8 +330,6 @@ export default function Dashboard(){
                     </div>  
                 </div>
             </div>}
-
         </section>
     )
-
-}
+}                                                                                       

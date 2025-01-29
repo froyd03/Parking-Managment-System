@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
-
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Client from './pages/Client/Client.jsx'
+import Slot from './pages/Slot/Slot.jsx'
 
 export default function App(){
 
@@ -12,6 +12,7 @@ export default function App(){
          <Routes>
             <Route path='/' element={<Dashboard />} />
             <Route path='/client' element={<Client />} />
+            <Route path='/slot' element={<Slot />} />
          </Routes>
       </BrowserRouter>
    )
