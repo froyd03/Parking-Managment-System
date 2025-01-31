@@ -64,7 +64,6 @@ select {
     width: 98%;
     padding: 10px;
     border-radius: 8px;
-    
     border: 1px solid rgba(0, 0, 0, 0.26);
     transition: border-color 0.3s ease;
     background-color: #fff;
@@ -130,4 +129,48 @@ button:hover{
     float: left;
     margin-right: 5%;
     border-radius: 10%;
+}
+
+
+.pagination-btn {
+    color: #1976D2;
+    font-weight: bold;
+    background-color: transparent;
+    font-size: 12px;
+}
+
+#prevPageBtn{padding: 0 8px 0 0;}
+#nextPageBtn{padding: 0 0 0 8px;}
+
+.pageInfo {
+    padding: 6px 12px;
+    text-align: center;
+    color: #1976D2;
+    font-weight: 600;
+}
+
+.pageActive{
+    padding: 6px 12px;
+    text-align: center;
+    border-radius: 8px;
+    color: #FFFF;
+    background-color: #5141C0;
+}
+
+.pagination-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#clientTypeSort,
+#vehicleFilter { 
+    margin-bottom: 20px;
+}
+
+#pagination-controls{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-top: 40px;
+    font-size: 12px;
 }

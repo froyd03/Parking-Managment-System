@@ -10,28 +10,6 @@
     overflow-x: auto;
 }
 
-.pagination-btn {
-    padding: 10px 15px;
-    margin: 0 5px;
-}
-
-.pagination-btn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-#clientTypeSort,
-#vehicleFilter { 
-    margin-bottom: 20px;
-}
-
-#pagination-controls{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
 @media (max-width: 768px) {
     .records, #completed-parking-table {
         width: 100%;

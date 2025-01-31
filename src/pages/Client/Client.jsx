@@ -4,6 +4,7 @@ import VIP from '@mui/icons-material/StarBorderOutlined';
 import Guest from '@mui/icons-material/HelpOutlineOutlined';
 import Member from '@mui/icons-material/PersonOutlined';
 import Record from '../../components/Record.jsx'
+import Pagination from '../../components/Pagination.jsx'
 import { useState } from 'react';
 
 export default function Client(){
@@ -57,14 +58,22 @@ export default function Client(){
     const [back, setBack] = useState(10)
 
     function nextBtn(){
-        if(back > sort.length) return;
-        setFront(s => s + 10);
-        setBack(b => b + 10);
+        if(back > sort.length){
+            console.log("next button triggered")
+            return;
+        }else{
+            setFront(s => s + 10);
+            setBack(b => b + 10);
+        }    
     }
     function previousBtn(){
-        if(front <= -1) return;
-        setFront(s => s - 10);
-        setBack(b => b - 10);
+        if(front <= -1){
+            console.log("previous button triggered")
+            return;
+        }else{
+            setFront(s => s - 10);
+            setBack(b => b - 10);
+        }
     }
 
     const limitShow = sort.filter((_, index) => {
@@ -90,16 +99,15 @@ export default function Client(){
                                 number={guestCount}/> 
                         </div>
                     </div>
-                    
-                    <div className="records-section">
-                        <div className = "table-responsive">
-                        <label htmlFor="clientTypeSort">Sort by Client Type:</label>
+                    <label htmlFor="clientTypeSort">Sort by Client Type:</label>
                         <select onChange={handleSort} id="clientTypeSort" >
                             <option value="all">All</option>
                             <option value="member">Members</option>
                             <option value="VIP">VIP Members</option>
                             <option value="guest">Guests</option>
                         </select>
+                    <div className="records-section">
+                        <div className = "table-responsive">
                             <table id="completed-parking-table">
                                 <thead>
                                     <tr>
@@ -121,11 +129,7 @@ export default function Client(){
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div id="pagination-controls">
-                        <button onClick={previousBtn} id="prevPageBtn" className="pagination-btn" >Prev</button>
-                        <span id="pageInfo">Page 1 of 1</span>
-                        <button onClick={nextBtn} id="nextPageBtn" className="pagination-btn" >Next</button>
+                        <Pagination prevClick={previousBtn} nextClick={nextBtn}/>
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import RecentActorsOutlinedIcon from '@mui/icons-material/RecentActorsOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import Record from '../../components/Record.jsx'
-
+import Pagination from '../../components/Pagination.jsx'
 
 export default function Dashboard(){
     
@@ -56,27 +56,28 @@ export default function Dashboard(){
         function to24HourFormat(timeStr) {
             const [time, modifier] = timeStr.split(' ');
             let [hours, minutes] = time.split(':').map(Number);
-        
+    
             if (modifier === 'PM' && hours !== 12) hours += 12;
-            if (modifier === 'AM' && hours === 12) hours = 0; 
+            if (modifier === 'AM' && hours === 12) hours = 0;
             return { hours, minutes };
         }
     
         const { hours: inHours, minutes: inMinutes } = to24HourFormat(tableRow[indexRef.current].timeIn);
         const { hours: outHours, minutes: outMinutes } = to24HourFormat(formatDate());
     
-        const inTime = new Date(1970, 0, 1, inHours, inMinutes);
-        const outTime = new Date(1970, 0, 1, outHours, outMinutes);
+        let inTime = new Date(1970, 0, 1, inHours, inMinutes);
+        let outTime = new Date(1970, 0, 1, outHours, outMinutes);
+    
+        if (outTime < inTime) outTime.setDate(outTime.getDate() + 1); 
     
         const totalMinutes = (outTime - inTime) / (1000 * 60);
-    
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
-
+    
         totalCharge.current = amountToPay(hours, minutes);
         return hours > 0 ? `${hours}hr ${minutes}min` : `${minutes}min`;
     }
-
+    
     function amountToPay(hours, minutes){
         let charge = 0;
         let isCarType = tableRow[indexRef.current].vehicleType === "Car";
@@ -189,6 +190,14 @@ export default function Dashboard(){
         setActive(fourWheelStatus + twoWheelStatus)
     }, [tableRow])
     
+    function nextBtn(){
+        console.log("sample 1")
+    }
+
+    function prevBtn(){
+        console.log("sample 2")
+    }
+
     return(
         <section>
             <div className="header">
@@ -223,50 +232,42 @@ export default function Dashboard(){
                 </div> 
             </div>
             <div className="meter">
-            <div className="search">
-                <p>Parking Meter</p>
-                    <div className="search-bar">    
-                    <SearchIcon />     
-                    <input placeholder="Plate #" type="text"/>
+                <div className="search">
+                    <p>Parking Meter</p>
+                        <div className="search-bar">    
+                        <SearchIcon />     
+                        <input placeholder="Plate #" type="text"/>
+                    </div>
                 </div>
-            </div>
-            <div className="add">
-                <button onClick={toggleform} id="addVehicle">check-in</button>
-            </div>
-            <table className='tableData'>
-                <thead>
-                    <tr>
-                        <th>Client Name</th>
-                        <th>License Plate</th>
-                        <th>Vehicle Type</th>
-                        <th>Time-in</th>
-                        <th>Rate</th>
-                        <th>Actions</th>
-                    </tr>        
-                    {tableRow.map((value, index) => 
-                        <tr key={index}>
-                            <td>{value.ClientName}</td>
-                            <td>{value.licensePlate}</td>
-                            <td>{value.vehicleType}</td>
-                            <td>{value.timeIn}</td>
-                            <td>{value.Rate}</td>
-                            <td><button 
-                                    className='btnView' 
-                                    onClick={() => handleDetails(index)}>
-                                view
-                                </button></td>
-                        </tr>
-                    )}     
-                </thead>
-            </table>
-            <div className="more">
-                <span>Showing 1 out of 1</span>
-                <div className="">
-                    <button>&lt;</button>
-                    <span>1</span>
-                    <button>&gt;</button>
+                <div className="add">
+                    <button onClick={toggleform} id="addVehicle">check-in</button>
                 </div>
-            </div>    
+                <table className='tableData'>
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>License Plate</th>
+                            <th>Vehicle Type</th>
+                            <th>Time-in</th>
+                            <th>Rate</th>
+                            <th>Actions</th>
+                        </tr>        
+                        {tableRow.map((value, index) => 
+                            <tr key={index}>
+                                <td>{value.ClientName}</td>
+                                <td>{value.licensePlate}</td>
+                                <td>{value.vehicleType}</td>
+                                <td>{value.timeIn}</td>
+                                <td>{value.Rate}</td>
+                                <td><button 
+                                        className='btnView' 
+                                        onClick={() => handleDetails(index)}>
+                                    view
+                                    </button></td>
+                            </tr>)}     
+                    </thead>
+                </table>
+                <Pagination prevClick={prevBtn} nextClick={nextBtn}/>  
             </div>
             {showForm && <div id="modal">
               <form action="">

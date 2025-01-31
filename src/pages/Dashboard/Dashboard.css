@@ -188,7 +188,6 @@ form h4{
     background-color: rgba(255, 0, 0, 0.75);
     padding: .6rem .9rem;
     width: 70px;
-    
 }
 
 .textError{
@@ -244,6 +243,7 @@ form h4{
 
 .btnView{
     border-radius: 3px;
+    padding: 4px 10px;
 }
 
 @media only screen and (max-width: 770px) {
