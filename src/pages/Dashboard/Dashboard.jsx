@@ -267,7 +267,7 @@ export default function Dashboard(){
                             </tr>)}     
                     </thead>
                 </table>
-                <Pagination prevClick={prevBtn} nextClick={nextBtn}/>  
+                <Pagination numberOfData={tableRow.length} prevClick={prevBtn} nextClick={nextBtn}/>  
             </div>
             {showForm && <div id="modal">
               <form action="">

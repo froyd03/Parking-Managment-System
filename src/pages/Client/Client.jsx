@@ -64,8 +64,9 @@ export default function Client(){
         }else{
             setFront(s => s + 10);
             setBack(b => b + 10);
-        }    
+        } 
     }
+    
     function previousBtn(){
         if(front <= -1){
             console.log("previous button triggered")
@@ -129,7 +130,9 @@ export default function Client(){
                                 </tbody>
                             </table>
                         </div>
-                        <Pagination prevClick={previousBtn} nextClick={nextBtn}/>
+                        <Pagination numberOfData={tableRow.length} 
+                                    prevClick={previousBtn} 
+                                    nextClick={nextBtn}/>
                     </div>
                 </div>
             </div>
