@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function Pagination(props){
 
-    let pageNumber = Math.ceil(props.numberOfData / 10);
+    const limitPage = 4;
+    const pageNumber = Math.ceil(props.numberOfData / props.maxPerPage);
+    const totalPage = pageNumber > limitPage ? limitPage : pageNumber;
 
     const activeRef = useRef([]);
     const [index, setIndex] = useState(0);
@@ -20,17 +22,30 @@ export default function Pagination(props){
         
     }, [index])
 
+    const [adjustCount, setCount] = useState(0);
+
     function handleNextBtn(){
         props.nextClick();
 
-        if(index < pageNumber-1) setIndex(i => i + 1) 
-        else return; 
+        if(index < totalPage-1){
+            setIndex(i => i + 1);
+        }else if(pageNumber > limitPage && index == (limitPage-1) && pageNumber !== (adjustCount+limitPage)){
+            setCount(c => c + 1);
+        }else return;
     }
 
     function handlePrevBtn(){
+        const rear = adjustCount+limitPage;
+        const current = (index+1)+adjustCount;
+        const front = rear-3;
+
         props.prevClick();
-        if(index > 0) setIndex(i => i - 1);
-        else return; 
+        if(index > 0){
+            setIndex(i => i - 1);
+        }else if(front === current && current !== 1){
+            setCount(c => c - 1);
+        }else return;
+        
     }
 
     return (
@@ -38,8 +53,8 @@ export default function Pagination(props){
             <ArrowBackIosNewIcon onClick={handlePrevBtn} color='primary' sx={{fontSize:15}}/>
             <button onClick={handlePrevBtn} id="prevPageBtn" className="pagination-btn" >Previous</button>
 
-            {Array.from({ length: pageNumber || 1}, (_, index) => (
-                <span ref={(el) => activeRef.current[index] = el} key={index} className="pageInfo">{index + 1}</span>
+            {Array.from({ length: totalPage || 1}, (_, index) => (
+                <span ref={(el) => activeRef.current[index] = el} key={index} className="pageInfo">{(index+1)+adjustCount}</span>
             ))}
 
             <button onClick={handleNextBtn} id="nextPageBtn" className="pagination-btn" >Next</button>

@@ -54,26 +54,25 @@ export default function Client(){
         return count;
     });
 
+    const maxPerPage = 1;
     const [front, setFront] = useState(-1);
-    const [back, setBack] = useState(10)
+    const [back, setBack] = useState(maxPerPage)
 
     function nextBtn(){
-        if(back > sort.length){
-            console.log("next button triggered")
+        if(back >= sort.length){
             return;
         }else{
-            setFront(s => s + 10);
-            setBack(b => b + 10);
+            setFront(s => s + maxPerPage);
+            setBack(b => b + maxPerPage);
         } 
     }
     
     function previousBtn(){
         if(front <= -1){
-            console.log("previous button triggered")
             return;
         }else{
-            setFront(s => s - 10);
-            setBack(b => b - 10);
+            setFront(s => s - maxPerPage);
+            setBack(b => b - maxPerPage);
         }
     }
 
@@ -131,6 +130,7 @@ export default function Client(){
                             </table>
                         </div>
                         <Pagination numberOfData={tableRow.length} 
+                                    maxPerPage={maxPerPage}
                                     prevClick={previousBtn} 
                                     nextClick={nextBtn}/>
                     </div>
