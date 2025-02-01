@@ -54,11 +54,14 @@ export default function Pagination(props){
     }
 
     return (
-        <div id="pagination-controls">
-            <ArrowBackIosNewIcon onClick={handlePrevBtn} color='primary' sx={{fontSize:15}}/>
-            <button onClick={handlePrevBtn} id="prevPageBtn" className="pagination-btn" >Previous</button>
-            {Array.from({ length: totalPage || 1}, (_, index) => (
-                <span ref={(el) => activeRef.current[index] = el} key={index} className="pageInfo">
+        <div id="pagination-controls"> 
+        <ArrowBackIosNewIcon onClick={handlePrevBtn} color='primary' sx={{fontSize:15}}/>
+         <button onClick={handlePrevBtn} id="prevPageBtn" className="pagination-btn" >previous</button>
+            {Array.from({length: totalPage || 1}, (_, index) => (
+                <span 
+                    key={index} 
+                    className='pageInfo' 
+                    ref={(el) => (activeRef.current[index] = el)}>
                     {(index+1)+adjustCount}
                 </span>
             ))}

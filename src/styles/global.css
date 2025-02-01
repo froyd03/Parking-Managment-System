@@ -147,6 +147,7 @@ button:hover{
     text-align: center;
     color: #1976D2;
     font-weight: 600;
+    cursor:default;
 }
 
 .pageActive{
