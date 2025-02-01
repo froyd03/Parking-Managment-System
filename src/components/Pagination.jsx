@@ -8,19 +8,25 @@ export default function Pagination(props){
     const pageNumber = Math.ceil(props.numberOfData / props.maxPerPage);
     const totalPage = pageNumber > limitPage ? limitPage : pageNumber;
 
-    const activeRef = useRef([]);
+    let activeRef = useRef([]);
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
         activeRef.current.forEach((element, i) => {
             activeRef.current[index].classList.add('pageActive');
-
             if(i !== index && element.classList.contains('pageActive')){
                 element.classList.remove('pageActive');
             }
         });
-        
     }, [index])
+
+    useEffect(() => {
+        activeRef.current = activeRef.current.filter(value => {
+            return value !== null;
+        });
+        setIndex(i => i = 0);
+        setCount(c => c = 0);
+    }, [pageNumber])
 
     const [adjustCount, setCount] = useState(0);
 
@@ -45,18 +51,17 @@ export default function Pagination(props){
         }else if(front === current && current !== 1){
             setCount(c => c - 1);
         }else return;
-        
     }
 
     return (
         <div id="pagination-controls">
             <ArrowBackIosNewIcon onClick={handlePrevBtn} color='primary' sx={{fontSize:15}}/>
             <button onClick={handlePrevBtn} id="prevPageBtn" className="pagination-btn" >Previous</button>
-
             {Array.from({ length: totalPage || 1}, (_, index) => (
-                <span ref={(el) => activeRef.current[index] = el} key={index} className="pageInfo">{(index+1)+adjustCount}</span>
+                <span ref={(el) => activeRef.current[index] = el} key={index} className="pageInfo">
+                    {(index+1)+adjustCount}
+                </span>
             ))}
-
             <button onClick={handleNextBtn} id="nextPageBtn" className="pagination-btn" >Next</button>
             <ArrowForwardIosIcon onClick={handleNextBtn} color='primary' sx={{fontSize:15}}/>
         </div>

@@ -5,17 +5,19 @@ import Guest from '@mui/icons-material/HelpOutlineOutlined';
 import Member from '@mui/icons-material/PersonOutlined';
 import Record from '../../components/Record.jsx'
 import Pagination from '../../components/Pagination.jsx'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Client(){
 
     const tableRow = JSON.parse(localStorage.getItem("allClientData")) || [];
     const [sort, setSort] = useState(tableRow);
-
-    function handleSort(e){
+    const [numOfData, setNumData] = useState(sort.length);
+    
+    function handleSort(e){    
         let sortedClient = tableRow;
         if(e.target.value === "all"){
-            setSort([...sortedClient])
+            setSort([...sortedClient]);
+            return;
         }else if(e.target.value === "VIP"){
             sortedClient = tableRow.filter(value => {
                 return value.clientType === "VIP"
@@ -54,7 +56,7 @@ export default function Client(){
         return count;
     });
 
-    const maxPerPage = 1;
+    const maxPerPage = 10;
     const [front, setFront] = useState(-1);
     const [back, setBack] = useState(maxPerPage)
 
@@ -80,6 +82,12 @@ export default function Client(){
         return front < index && back > index;
     })
 
+    useEffect(() => {
+        setNumData(n => n = sort.length);
+        setFront(s => s = -1);
+        setBack(b => b = maxPerPage);
+    }, [sort])
+    
     return(
         <section>
             <div className="main-wrapper"> 
@@ -129,7 +137,7 @@ export default function Client(){
                                 </tbody>
                             </table>
                         </div>
-                        <Pagination numberOfData={tableRow.length} 
+                        <Pagination numberOfData={numOfData} 
                                     maxPerPage={maxPerPage}
                                     prevClick={previousBtn} 
                                     nextClick={nextBtn}/>
