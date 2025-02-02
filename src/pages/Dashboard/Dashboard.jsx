@@ -108,6 +108,7 @@ export default function Dashboard(){
     const plateInpt = useRef();
     const vehicleRbtn = useRef();
     const clientOpt = useRef();
+    const floorOpt = useRef();
     const slotOpt = useRef();
 
     function addClient(){
@@ -131,8 +132,8 @@ export default function Dashboard(){
                 clientType: clientOpt.current.value,
                 timeIn: formatDate(),
                 Rate: vehicleRbtn.current.checked ? "₱15/hr" : "₱7/hr",
+                slotLocation: Number(floorOpt.current.value) * 10 + Number(slotOpt.current.value)
             }
-
             setActiveData(tr => [newClient, ...tableRow]);   
             setStoredData(newClient);
             toggleform();
@@ -297,13 +298,27 @@ export default function Dashboard(){
                         <option value="Guest">Guest</option>
                       </select>
                     </label>
-                    <label className="lblSlots" htmlFor="clientSlot">Parking Slots
+                    <label className="lblSlots" htmlFor="clientSlot">Parking floors
+                      <select name="client" ref={floorOpt} id="clientSlot">
+                        <option value="0">1st Floor</option>
+                        <option value="1">2nd Floor</option>
+                        <option value="2">3rd Floor</option>
+                        <option value="3">4th Floor</option>
+                        <option value="4">5th Floor</option>
+                      </select>
+                    </label>
+                    <label className="lblSlots" htmlFor="clientSlot">Available slots
                       <select name="client" ref={slotOpt} id="clientSlot">
-                        <option value="Level 1">Level 1</option>
-                        <option value="Level 2">Level 2</option>
-                        <option value="Level 3">Level 3</option>
-                        <option value="Level 4">Level 4</option>
-                        <option value="Level 5">Level 5</option>
+                        <option value="0">Slot 1</option>
+                        <option value="1">Slot 2</option>
+                        <option value="2">Slot 3</option>
+                        <option value="3">Slot 4</option>
+                        <option value="4">Slot 5</option>
+                        <option value="5">Slot 6</option>
+                        <option value="6">Slot 7</option>
+                        <option value="7">Slot 8</option>
+                        <option value="8">Slot 9</option>
+                        <option value="9">Slot 10</option>
                       </select>
                     </label>
                   </div>

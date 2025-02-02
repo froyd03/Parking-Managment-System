@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import '../Slot/Slot.css'
 import DirectionsBusOutlinedIcon from '@mui/icons-material/DirectionsBusOutlined';
 
@@ -7,22 +7,26 @@ export default function Slot(){
     const column = 10;
     const Row = totalSlot / column;;
 
-    const index = [1, 10, 39];
+    const tableRow = JSON.parse(localStorage.getItem("data")) || [];
     const iconRef = useRef([]);
 
     function occupied(i){  
         let isEqual;   
-        for(let j = 0; j < index.length; j++){
-            isEqual = true;
-            if(index[j] != i) isEqual = false;
-            else break;
+        for(let j = 0; j < tableRow.length; j++){
+            isEqual = false;
+            if(tableRow[j].slotLocation == i){
+                isEqual = true;
+                break;
+            }
         }
         return isEqual ? 'primary':'action';
     }
+
+    console.log(iconRef)
     
     return(
         <section>
-           <h3>Slot</h3>
+           <h3>Slot Management</h3>
            <hr />
            <div className="occupancyTable">
                 <p>Parking Occupancy</p>
@@ -45,6 +49,7 @@ export default function Slot(){
                             </div>
                         ))}
                 </div>
+                
 
            </div>
         </section>
