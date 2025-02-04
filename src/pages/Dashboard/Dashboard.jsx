@@ -132,7 +132,8 @@ export default function Dashboard(){
                 clientType: clientOpt.current.value,
                 timeIn: formatDate(),
                 Rate: vehicleRbtn.current.checked ? "₱15/hr" : "₱7/hr",
-                slotLocation: Number(floorOpt.current.value) * 10 + Number(slotOpt.current.value)
+                Floor: Number(floorOpt.current.value),
+                Slot: Number(slotOpt.current.value)
             }
             setActiveData(tr => [newClient, ...tableRow]);   
             setStoredData(newClient);
@@ -235,8 +236,8 @@ export default function Dashboard(){
             <div className="meter">
                 <div className="search">
                     <p>Parking Meter</p>
-                        <div className="search-bar">    
-                        <SearchIcon />     
+                    <div className="search-bar">    
+                        <SearchIcon color='action' sx={{fontSize: 22}}/>     
                         <input placeholder="Plate #" type="text"/>
                     </div>
                 </div>

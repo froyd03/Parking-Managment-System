@@ -3,11 +3,13 @@
     padding: 20px;
     border-radius: 10px;
     margin-left: 2%;
+    position: relative;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .table-responsive {
     overflow-x: auto;
+    margin-top: 1.5rem;
 }
 
 @media (max-width: 768px) {

@@ -115,6 +115,8 @@ export default function Client(){
                             <option value="guest">Guests</option>
                         </select>
                     <div className="records-section">
+                        <p>Client History Overview </p>
+                        <hr className='line'/>
                         <div className = "table-responsive">
                             <table id="completed-parking-table">
                                 <thead>

@@ -39,6 +39,7 @@ label {
 p {
     font-size: 15px;
     color: #333;
+    margin: 0;
 }
 
 table{
@@ -174,4 +175,22 @@ button:hover{
     align-items: center;
     margin-top: 40px;
     font-size: 12px;
+}
+
+input:focus{
+    outline: 1px solid #156FF5;
+    background-color: #F4F4F4;
+}
+
+input{
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.384);
+    border-radius: 10px;
+}
+
+
+.line{
+    position: absolute;
+    left: 0;
+    width: 100%;
 }
