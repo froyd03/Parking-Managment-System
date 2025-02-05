@@ -13,7 +13,7 @@ import Pagination from '../../components/Pagination.jsx'
 
 export default function Dashboard(){
     
-    const [tableRow, setActiveData] = useState(() => {
+    const [activeData, setActiveData] = useState(() => {
         return JSON.parse(localStorage.getItem("data")) || []
     });
 
@@ -26,10 +26,10 @@ export default function Dashboard(){
     const [showForm, setShowForm] = useState(false);
     const [isShowDetails, setShowDetails] = useState(false);
 
-    const indexRef = useRef();
+    const [clickedIndex, setClickedIndex] = useState(0);
     function handleDetails(index){
         setShowDetails(d => !d); 
-        indexRef.current = index;
+        setClickedIndex(index); //assign for  global variable
     }
  
     function toggleform(){
@@ -42,16 +42,17 @@ export default function Dashboard(){
         return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
     }
     
-    function formatDate(){
+    function formatedDate(){
         const date = new Date();
-        const hour = date.getHours() > 12 ? "0"+(date.getHours()-12): date.getHours();
-        const mins = date.getMinutes() < 10 ? "0"+(date.getMinutes()): date.getMinutes();
-        const meridiem = date.getHours() > 11 ? "PM":"AM";
+        const HOUR = date.getHours() > 12 ? "0"+(date.getHours()-12): date.getHours();
+        const MINS = date.getMinutes() < 10 ? "0"+(date.getMinutes()): date.getMinutes();
+        const MERIDIEM = date.getHours() > 11 ? "PM":"AM";
         
-        return `${hour}:${mins} ${meridiem}`;
+        return `${HOUR}:${MINS} ${MERIDIEM}`;
     }
 
     const totalCharge= useRef();
+
     function calculateTimeConsumed() {
         function to24HourFormat(timeStr) {
             const [time, modifier] = timeStr.split(' ');
@@ -62,8 +63,8 @@ export default function Dashboard(){
             return { hours, minutes };
         }
     
-        const { hours: inHours, minutes: inMinutes } = to24HourFormat(tableRow[indexRef.current].timeIn);
-        const { hours: outHours, minutes: outMinutes } = to24HourFormat(formatDate());
+        const { hours: inHours, minutes: inMinutes } = to24HourFormat(activeData[clickedIndex].timeIn);
+        const { hours: outHours, minutes: outMinutes } = to24HourFormat(formatedDate());
     
         let inTime = new Date(1970, 0, 1, inHours, inMinutes);
         let outTime = new Date(1970, 0, 1, outHours, outMinutes);
@@ -79,28 +80,24 @@ export default function Dashboard(){
     }
     
     function amountToPay(hours, minutes){
-        let charge = 0;
-        let isCarType = tableRow[indexRef.current].vehicleType === "Car";
+        const CAR_PER_HOUR = 15, MOTOR_PER_HOUR = 7;
+        const CAR_PER_MIN = 5, MOTOR_PER_MIN = 2;
+        const MINIMUM_MIN = 10, HALF_MIN = 30;
+        
+        let isCarType = activeData[clickedIndex].vehicleType === "Car";
+        let perMinCharge = isCarType ? CAR_PER_MIN : MOTOR_PER_MIN;
+        let perHourCharge = isCarType ? hours * CAR_PER_HOUR : hours * MOTOR_PER_HOUR;
 
-        if(minutes >= 10 && isCarType){ //for car charged
-            charge += 5;
-        }else if(minutes >= 10 && !isCarType){ // for motorcycle chrage
-            charge += 2;
-        } 
-
-        if(minutes >= 30 && isCarType){
-            charge += 5;
-        }else if((minutes >= 30 && !isCarType)){
-            charge += 3;
+        let totalCharge = 0;
+        if (minutes >= MINIMUM_MIN) {
+            totalCharge += perMinCharge; // Charge for MINIMUM_MIN
+            if (minutes >= HALF_MIN) {
+                totalCharge += perMinCharge; // Extra charge for HALF_MIN
+            }
         }
-
-        if(hours >= 1 && isCarType){
-            charge += hours * 15;
-        }else if((hours >= 1 && !isCarType)){
-            charge += hours * 7;
-        }
-
-        return charge;
+        console.log(perMinCharge)
+        totalCharge += perHourCharge;
+        return totalCharge;
     }
 
     const [errorMessage, setErrorMassage] = useState("");
@@ -115,7 +112,7 @@ export default function Dashboard(){
         let isReject = false;
 
         if(nameInput.current.value && plateInpt.current.value){
-            tableRow.forEach(value => {
+            activeData.forEach(value => {
                 if(value.licensePlate === plateInpt.current.value.toUpperCase()){
                     isReject = true;
                     plateInpt.current.classList.add("invalid");
@@ -130,12 +127,12 @@ export default function Dashboard(){
                 licensePlate: plateInpt.current.value.toUpperCase(),
                 vehicleType: vehicleRbtn.current.checked ? "Car" : "Motorcycle",
                 clientType: clientOpt.current.value,
-                timeIn: formatDate(),
+                timeIn: formatedDate(),
                 Rate: vehicleRbtn.current.checked ? "₱15/hr" : "₱7/hr",
                 Floor: Number(floorOpt.current.value),
                 Slot: Number(slotOpt.current.value)
             }
-            setActiveData(tr => [newClient, ...tableRow]);   
+            setActiveData(tr => [newClient, ...activeData]);   
             setStoredData(newClient);
             toggleform();
         }else{
@@ -154,13 +151,13 @@ export default function Dashboard(){
     }
 
     function removeClient(){
-        const filtered = tableRow.filter(value => {
-            return value.licensePlate !== tableRow[indexRef.current].licensePlate;
+        const filtered = activeData.filter(value => {
+            return value.licensePlate !== activeData[clickedIndex].licensePlate;
         })
         setActiveData(t => [...filtered]);
         setShowDetails(d => !d);
 
-        if(tableRow[indexRef.current].vehicleType === "Car"){
+        if(activeData[clickedIndex].vehicleType === "Car"){
             setFourWheel(fh => fh - 1);
         }else{
             setTwoWheel(th => th - 1);
@@ -169,7 +166,7 @@ export default function Dashboard(){
 
     const [fourWheelStatus, setFourWheel] = useState(() => {
         let count = 0;
-        tableRow.forEach(value => {
+        activeData.forEach(value => {
             if(value.vehicleType === "Car") count++;
         })
         return count;
@@ -177,7 +174,7 @@ export default function Dashboard(){
 
     const [twoWheelStatus, setTwoWheel] = useState(() => {
         let count = 0;
-        tableRow.forEach(value => {
+        activeData.forEach(value => {
             if(value.vehicleType === "Motorcycle") count++;
         })
         return count;
@@ -187,10 +184,10 @@ export default function Dashboard(){
     const [activeClient, setActive] = useState(0);
 
     useEffect(()=> {
-        localStorage.setItem("data", JSON.stringify(tableRow));
+        localStorage.setItem("data", JSON.stringify(activeData));
         setAvailSlot(50-(fourWheelStatus + twoWheelStatus))
         setActive(fourWheelStatus + twoWheelStatus)
-    }, [tableRow])
+    }, [activeData])
     
     function nextBtn(){
         console.log("sample 1")
@@ -254,7 +251,7 @@ export default function Dashboard(){
                             <th>Rate</th>
                             <th>Actions</th>
                         </tr>        
-                        {tableRow.map((value, index) => 
+                        {activeData.map((value, index) => 
                             <tr key={index}>
                                 <td>{value.ClientName}</td>
                                 <td>{value.licensePlate}</td>
@@ -269,7 +266,7 @@ export default function Dashboard(){
                             </tr>)}     
                     </thead>
                 </table>
-                <Pagination numberOfData={tableRow.length} prevClick={prevBtn} nextClick={nextBtn}/>  
+                <Pagination numberOfData={activeData.length} prevClick={prevBtn} nextClick={nextBtn}/>  
             </div>
             {showForm && <div id="modal">
               <form action="">
@@ -336,9 +333,10 @@ export default function Dashboard(){
             {isShowDetails && <div id='modal'>
                 <div className="details">
                     <h4>Client Details</h4>
-                    <p><b>Name:</b> {tableRow[indexRef.current].ClientName}</p>
-                    <p><b>License:</b> {tableRow[indexRef.current].licensePlate}</p>
-                    <p><b>Time-in:</b> {tableRow[indexRef.current].timeIn} | {dateNow()}</p>
+                    <p><b>Name:</b> {activeData[clickedIndex].ClientName}</p>
+                    <p><b>License:</b> {activeData[clickedIndex].licensePlate}</p>
+                    <p><b>Time-in:</b> {activeData[clickedIndex].timeIn} | {dateNow()}</p>
+                    <p><b>Vehicle Type:</b> {activeData[clickedIndex].vehicleType} | {activeData[clickedIndex].Rate}</p>
                     <p><b>Time Consumed:</b> {calculateTimeConsumed()}</p>
                     <p><b>Amount Payable:</b> ₱{totalCharge.current}</p>
                     <div>

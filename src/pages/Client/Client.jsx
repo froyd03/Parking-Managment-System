@@ -14,58 +14,24 @@ export default function Client(){
     const [numOfData, setNumData] = useState(sort.length);
     
     function handleSort(e){    
-        let sortedClient = tableRow;
-        if(e.target.value === "all"){
-            setSort([...sortedClient]);
-            return;
-        }else if(e.target.value === "VIP"){
-            sortedClient = tableRow.filter(value => {
-                return value.clientType === "VIP"
-            })
-        }else if(e.target.value === "guest"){
-            sortedClient = tableRow.filter(value => {
-                return value.clientType === "Guest"
-            })
-        }else if(e.target.value === "member"){
-            sortedClient = tableRow.filter(value => {
-                return value.clientType === "Member"
-            })
-        }
-        setSort([...sortedClient])
+        const sorted = tableRow.filter(value => value.clientType === e.target.value);
+        setSort(s => s = sorted.length != 0 ? sorted : tableRow);
     }
 
-    const [vipCount, setVipCount] = useState(() => {
-        let count = 0;
-        tableRow.forEach(element => {
-            if(element.clientType === "VIP") count++;
-        });
-        return count;
-    });
-    const [memberCount, setMemberCount] = useState(() => {
-        let count = 0;
-        tableRow.forEach(element => {
-            if(element.clientType === "Member") count++;
-        });
-        return count;
-    });
-    const [guestCount, setGuestCount] = useState(() => {
-        let count = 0;
-        tableRow.forEach(element => {
-            if(element.clientType === "Guest") count++;
-        });
-        return count;
-    });
+    function getClientTypeCount(ClientType){
+        return tableRow.filter(element => element.clientType === ClientType).length;
+    }
 
-    const maxPerPage = 10;
+    const MAX_PER_PAGE = 10;
     const [front, setFront] = useState(-1);
-    const [back, setBack] = useState(maxPerPage)
+    const [back, setBack] = useState(MAX_PER_PAGE)
 
     function nextBtn(){
         if(back >= sort.length){
             return;
         }else{
-            setFront(s => s + maxPerPage);
-            setBack(b => b + maxPerPage);
+            setFront(s => s + MAX_PER_PAGE);
+            setBack(b => b + MAX_PER_PAGE);
         } 
     }
     
@@ -73,8 +39,8 @@ export default function Client(){
         if(front <= -1){
             return;
         }else{
-            setFront(s => s - maxPerPage);
-            setBack(b => b - maxPerPage);
+            setFront(s => s - MAX_PER_PAGE);
+            setBack(b => b - MAX_PER_PAGE);
         }
     }
 
@@ -83,9 +49,9 @@ export default function Client(){
     })
 
     useEffect(() => {
-        setNumData(n => n = sort.length);
-        setFront(s => s = -1);
-        setBack(b => b = maxPerPage);
+        setNumData(sort.length);
+        setFront(-1);
+        setBack(MAX_PER_PAGE);
     }, [sort])
     
     return(
@@ -98,21 +64,21 @@ export default function Client(){
                         <div className="live-record">
                             <Record icon={<VIP color='primary' sx={{fontSize: 40}} className='icon'/>} 
                                 title="VIP" 
-                                number={vipCount}/> 
+                                number={getClientTypeCount("VIP")}/> 
                              <Record icon={<Member color='primary' sx={{fontSize: 40}} className='icon'/>} 
                                 title="Member" 
-                                number={memberCount}/> 
+                                number={getClientTypeCount("Member")}/> 
                              <Record icon={<Guest color='primary' sx={{fontSize: 40}} className='icon'/>} 
                                 title="Guest" 
-                                number={guestCount}/> 
+                                number={getClientTypeCount("Guest")}/> 
                         </div>
                     </div>
                     <label htmlFor="clientTypeSort">Sort by Client Type:</label>
                         <select onChange={handleSort} id="clientTypeSort" >
                             <option value="all">All</option>
-                            <option value="member">Members</option>
+                            <option value="Member">Members</option>
                             <option value="VIP">VIP Members</option>
-                            <option value="guest">Guests</option>
+                            <option value="Guest">Guests</option>
                         </select>
                     <div className="records-section">
                         <p>Client History Overview </p>
@@ -140,7 +106,7 @@ export default function Client(){
                             </table>
                         </div>
                         <Pagination numberOfData={numOfData} 
-                                    maxPerPage={maxPerPage}
+                                    maxPerPage={MAX_PER_PAGE}
                                     prevClick={previousBtn} 
                                     nextClick={nextBtn}/>
                     </div>
