@@ -12,9 +12,23 @@ export default function Transaction(){
             <hr />
             <div className='credit-card'>
                 <div className="earnings">
-                    <p>Total Earings</p>
-                    <h3>₱ 0.00</h3>  
-                    <img src={CardChip} alt="" />             
+                    <div>
+                        <p>Total Earings</p>
+                        <h3>₱ 0.00</h3>
+                    </div>
+                    <span>
+                        <img src={CardChip} alt="" />             
+                    </span>
+                 </div>
+                 <div className="card-info">
+                    <div>
+                        <p>CARD HOLDER</p>
+                        <p><b>Admin</b></p>
+                    </div>
+                    <div>
+                        <p className='secondary'>VALID THRU </p>
+                        <p><b>12/22</b></p>
+                    </div>
                  </div>
 
                 <div className="card-footer">

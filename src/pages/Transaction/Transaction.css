@@ -1,9 +1,10 @@
 .credit-card{
     background: linear-gradient(135deg, #2623e4, #4049f7);
     margin: 2% 0 0 2%;
-    width: 34%;
-    height: 190px;
-    padding: 10px;
+    width: 32%;
+    min-width: 280px;
+    height: 180px;
+    padding: 10px 20px;
     border-radius: 20px;
     position: relative;
 }
@@ -29,7 +30,37 @@
     display: flex;
 }
 
-.circle{
+.earnings{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+
+    & p{
+        font-size: 12px;
+        color: #ffffffcc;
+    }
+
+    & h3{
+        margin: 0;
+        color: #fffffffa;
+    }
+}
+
+.card-info{
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 15px;
+
+    & p{
+        font-size: 12px;
+        color: #ffffffcc;
+    }
+}
+
+.circle{    
     align-self: center;
     width: 30px;
     height: 30px;
