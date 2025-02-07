@@ -28,12 +28,15 @@ export default function Slot(){
 
     function getClient(index){
         setIndex(maxPerPage*(currentPage-1) + index)
-        setShowForm(true)
+        setShowForm(true);
     }
 
     function getSlotIndex(i){
         return tableRow[i].Floor * 10 + tableRow[i].Slot;   
     }
+
+    const slotOptRef = useRef();
+    const floorOptRef = useRef();
 
     const maxPerPage = 5;
     const [front, setFront] = useState(-1);
@@ -59,8 +62,6 @@ export default function Slot(){
 
     useEffect(() => {
         currentPage = Math.ceil(back / tableRow.length)
-       
-
     }, [front])
 
     const limitShow = tableRow.filter((_, index) => {
@@ -129,11 +130,32 @@ export default function Slot(){
                 </div>
            </div>
            {showForm && <div id="modal">
-                
-                <div className="details">
+                <div className="">
                     {tableRow[indexByPage].ClientName}
+                    <label className="lblSlots" htmlFor="clientSlot">Parking floors
+                      <select name="client" ref={floorOptRef} id="clientSlot">
+                        <option value="0">1st Floor</option>
+                        <option value="1">2nd Floor</option>
+                        <option value="2">3rd Floor</option>
+                        <option value="3">4th Floor</option>
+                        <option value="4">5th Floor</option>
+                      </select>
+                    </label>
+                    <label className="lblSlots" htmlFor="clientSlot">Available slots
+                      <select name="client" onChange={getValue} ref={slotOptRef} id="clientSlot">
+                        <option value="0">Slot 1</option>
+                        <option value="1">Slot 2</option>
+                        <option value="2">Slot 3</option>
+                        <option value="3">Slot 4</option>
+                        <option value="4">Slot 5</option>
+                        <option value="5">Slot 6</option>
+                        <option value="6">Slot 7</option>
+                        <option value="7">Slot 8</option>
+                        <option value="8">Slot 9</option>
+                        <option value="9">Slot 10</option>
+                      </select>
+                    </label>
                 </div>
-                
             </div>}
         </section>
     )

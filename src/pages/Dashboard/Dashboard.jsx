@@ -95,7 +95,6 @@ export default function Dashboard(){
                 totalCharge += perMinCharge; // Extra charge for HALF_MIN
             }
         }
-        console.log(perMinCharge)
         totalCharge += perHourCharge;
         return totalCharge;
     }

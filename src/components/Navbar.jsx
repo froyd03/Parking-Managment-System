@@ -22,12 +22,12 @@ export default function Navbar(){
         {
             btnName:'Client', 
             path: '/client',
-            btnIcon: <PaidIcon sx={{fontSize: 25}}/>
+            btnIcon: <PeopleAltIcon sx={{fontSize: 25}}/>
         },
         {
             btnName:'Transaction', 
-            path: '/',
-            btnIcon: <PeopleAltIcon sx={{fontSize: 25}}/>
+            path: '/transaction',
+            btnIcon: <PaidIcon sx={{fontSize: 25}} />
         }
     ];
 
@@ -35,7 +35,7 @@ export default function Navbar(){
     const [clickedIndex, setClickedIndex] = useState(0);
 
     useEffect(() => {
-        activePageRef.current[clickedIndex].classList.add('active');
+        handleActiveBtn(clickedIndex)
     }, [clickedIndex])
 
     
@@ -46,6 +46,8 @@ export default function Navbar(){
             }
         })
         setClickedIndex(index);
+        activePageRef.current[index].classList.add('active');
+
     }
 
     return(<>

@@ -1,0 +1,49 @@
+.credit-card{
+    background: linear-gradient(135deg, #2623e4, #4049f7);
+    margin: 2% 0 0 2%;
+    width: 34%;
+    height: 190px;
+    padding: 10px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.card-footer{
+    display: flex;
+    width: 100%;
+    height: 25%;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to bottom, #ffffff23, #ffffff00);
+}
+
+.card-footer h2, .circle{
+    color: #ffffffd0;
+    align-self: center;
+    font-weight: 500;
+}
+
+.circle-container{
+    display: flex;
+}
+
+.circle{
+    align-self: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: relative;
+    background-color: #ffffff71;
+
+    &::after{
+        content: "";
+        position: absolute;
+        right: 14px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #ffffff71;
+    }
+}

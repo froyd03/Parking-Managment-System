@@ -12,17 +12,3 @@
     margin-top: 1.5rem;
 }
 
-@media (max-width: 768px) {
-    .records, #completed-parking-table {
-        width: 100%;
-        min-width: 500px;
-    }
-
-    #pagination-controls {
-        flex-wrap: wrap;
-    }
-
-    .pagination-btn {
-        margin: 5px;
-    }
-}

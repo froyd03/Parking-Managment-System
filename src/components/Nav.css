@@ -16,6 +16,7 @@
     color: #f5f7fa;
     border-radius: 0px 15px 15px 0px;
     font-family: 'poppins';
+    z-index: 1;
 }
 
 .navBtn{
@@ -68,31 +69,4 @@ hr{
     width: 6px;
     height: 45px;
     background-color: #16dbcc;
-}
-
-@media only screen and (max-width: 770px) {
-    .nav-container{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        position: fixed;
-        top: inherit;
-        bottom: 0;
-        height: 50px;
-        width: 100%;
-        border-radius: 10px 10px 0px 0px;
-    }
-
-    .nav-container span, .nav-container h1, .nav-container hr{
-        display: none;
-    }
-
-    .nav-img{
-        display: block;
-        margin: 0;
-    }
-    
-    .navBtn{
-        padding: 10px 10px 10px 10px;
-    }
 }
